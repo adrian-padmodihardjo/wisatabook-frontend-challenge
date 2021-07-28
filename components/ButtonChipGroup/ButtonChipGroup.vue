@@ -18,6 +18,15 @@ export default {
         this.$children.forEach((c) => {
           c.mActive = c === child
         })
+        this.$emit('change', child.value)
+      }
+    },
+    setInactive () {
+      if (Array.isArray(this.$children)) {
+        this.$children.forEach((c) => {
+          c.mActive = false
+        })
+        this.$emit('change', undefined)
       }
     },
   },

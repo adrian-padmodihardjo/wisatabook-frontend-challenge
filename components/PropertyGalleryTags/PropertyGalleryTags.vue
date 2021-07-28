@@ -1,10 +1,12 @@
 <template>
   <div class="property-gallery-tags">
     <HorizontalScroller>
-      <ButtonChipGroup>
+      <ButtonChipGroup @change="onActiveChipChanged">
         <ButtonChip
           v-for="(tag, i) in tags"
           :key="i"
+          :value="tag"
+          :active="tag === activeChip"
           active-color="#1a73e8"
         >
           {{ tag }}
@@ -19,6 +21,8 @@ import { ButtonChipGroup } from '@/components/ButtonChipGroup'
 import { ButtonChip } from '@/components/ButtonChip'
 import { HorizontalScroller } from '@/components/HorizontalScroller'
 import propertyDetails from '@/mocks/property-details.mock.json'
+
+const ALL_IMAGES = 'ALL'
 export default {
   components: {
     HorizontalScroller,
@@ -31,6 +35,11 @@ export default {
       required: true,
     },
   },
+  data () {
+    return {
+      activeChip: ALL_IMAGES,
+    }
+  },
   computed: {
     tags () {
       const captions = propertyDetails.images.reduce((obj, img) => {
@@ -38,7 +47,15 @@ export default {
         return obj
       }, {})
 
-      return Object.keys(captions)
+      return [ALL_IMAGES, ...Object.keys(captions)]
+    },
+  },
+  methods: {
+    onActiveChipChanged (activeChip) {
+      this.activeChip = activeChip === undefined
+        ? ALL_IMAGES
+        : activeChip
+      this.$emit('change', activeChip === ALL_IMAGES ? undefined : activeChip)
     },
   },
 }

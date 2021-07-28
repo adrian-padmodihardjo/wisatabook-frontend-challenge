@@ -24,6 +24,10 @@ export default {
     },
   },
   props: {
+    // eslint-disable-next-line vue/require-prop-types
+    value: {
+      default: null,
+    },
     active: {
       type: Boolean,
     },
@@ -56,8 +60,12 @@ export default {
   methods: {
     onClick () {
       this.mActive = !this.mActive
-      if (this.mActive && this.$chipGroup) {
-        this.$chipGroup.setActive(this)
+      if (this.$chipGroup) {
+        if (this.mActive) {
+          this.$chipGroup.setActive(this)
+        } else {
+          this.$chipGroup.setInactive(this)
+        }
       }
       this.$emit('click')
     },
