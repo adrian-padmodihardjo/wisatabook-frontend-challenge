@@ -1,0 +1,58 @@
+@use "sass:math" as math;
+@use "@/assets/stylesheet/breakpoints" as B;
+
+@mixin image-gap($gapPixel) {
+  & {
+    inset: math.div($gapPixel, 2);
+    width: calc(100% - #{$gapPixel});
+    height: calc(100% - #{$gapPixel});
+  }
+}
+
+.images-grid {
+  display: flex;
+  flex-flow: row wrap;
+
+  &__item {
+    position: relative;
+    margin: 0;
+    padding: 0;
+    flex: 0 1 auto;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+    border: thin solid rgba(0,0,0,.12);
+
+    &::before {
+      content: '';
+      display: block;
+      padding-top: 100%;
+    }
+
+    img {
+      z-index: 1;
+      position: absolute;
+      object-fit: cover;
+      object-position: center;
+
+      @include image-gap(0px);
+    }
+  }
+}
+
+@include B.sm() {
+  $--gap: 24px;
+  .images-grid {
+    margin: 0 math.div($--gap, -2);
+
+    &__item {
+      border: none;
+      padding: math.div($--gap, 2);
+
+      img {
+        @include image-gap(24px);
+      }
+    }
+  }
+}
