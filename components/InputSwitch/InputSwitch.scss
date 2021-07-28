@@ -1,0 +1,88 @@
+@use "sass:math" as math;
+
+$--btn-height: 28px;
+$--toggle-size: 20px;
+$--ripple-size: 40px;
+$--transition: all 0.3s ease-in-out;
+
+// pre-compute toggle position
+$--toggle-x: math.div($--btn-height - $--toggle-size, 2);
+$--toggle-active-x: calc(100% - #{$--toggle-size + $--toggle-x});
+
+// pre-compute ripple position
+$--highlight-x: $--toggle-x + math.div($--ripple-size - $--toggle-size, -2);
+$--highlight-active-x: calc(100% - #{$--ripple-size + $--highlight-x});
+
+.input-switch {
+  position: relative;
+  cursor: pointer;
+  display: inline-flex;
+  justify-content: flex-start;
+  align-items: center;
+
+  &:hover &,
+  &:focus & {
+    &__highlight {
+      opacity: 0.2;
+    }
+  }
+
+  &:active,
+  &:focus {
+    outline: none;
+    border: none;
+  }
+
+  &--active & {
+    &__track {
+      background-color: currentColor;
+    }
+    &__highlight {
+      left: $--highlight-active-x;
+      background-color: currentColor;
+    }
+    &__toggle {
+      left: $--toggle-active-x;
+      background-color: currentColor;
+      opacity: 1;
+    }
+  }
+
+  &__track {  
+    display: inline-block;
+    width: 48px;
+    height: $--btn-height;
+    border-radius: $--btn-height;
+    background-color: rgba(0,0,0,.38);
+    opacity: 0.32;
+  }
+
+  &__highlight {
+    z-index: 0;
+    position: absolute;
+    left: $--highlight-x;
+
+    display: inline-block;
+    width: $--ripple-size;
+    height: $--ripple-size;
+    border-radius: $--ripple-size;
+    background-color: rgba(0, 0, 0, 0.87);
+    opacity: 0;
+    transition: $--transition;
+  }
+
+  &__toggle {
+    z-index: 1;
+    position: absolute;
+    top: calc((100% - #{$--toggle-size}) / 2);
+    left: $--toggle-x;
+    
+    display: inline-block;
+    width: $--toggle-size;
+    height: $--toggle-size;
+    border-radius: $--toggle-size;
+    background-color: white;
+
+    transition: $--transition;
+  }
+}
