@@ -31,6 +31,10 @@ export default {
       type: String,
       required: true,
     },
+    caption: {
+      type: String,
+      default: undefined,
+    },
   },
   data () {
     return {
@@ -54,7 +58,22 @@ export default {
       })
     },
   },
+  watch: {
+    caption: {
+      immediate: false,
+      handler (newVal, oldVal) {
+        if (newVal !== oldVal) {
+          this.resetImages()
+          this.fetchImages()
+        }
+      },
+    },
+  },
   methods: {
+    resetImages () {
+      this.currentPage = 0
+      this.images = []
+    },
     // this method must return boolean,
     // to determine whether intersection observer
     // should be restarted or not
@@ -63,6 +82,7 @@ export default {
       const limit = this.cols * this.rows
       const { data } = await getImages.call(mock, this.propertyId, {
         page: this.currentPage,
+        caption: this.caption,
         limit,
       })
       if (Array.isArray(data) && data.length) {

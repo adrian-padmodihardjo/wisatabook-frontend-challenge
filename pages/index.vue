@@ -5,8 +5,12 @@
       <PropertyGalleryTags
         property-id="9000248525"
         style="margin: 0 -12px; padding: 16px 0;"
+        @change="caption = $event"
       />
-      <PropertyGallery property-id="9000248525" />
+      <PropertyGallery
+        property-id="9000248525"
+        :caption="caption"
+      />
     </ResponsiveContainer>
   </div>
 </template>
@@ -22,6 +26,11 @@ export default {
     ResponsiveContainer,
     PropertyGallery,
     PropertyGalleryTags,
+  },
+  data () {
+    return {
+      caption: undefined,
+    }
   },
 }
 </script>
