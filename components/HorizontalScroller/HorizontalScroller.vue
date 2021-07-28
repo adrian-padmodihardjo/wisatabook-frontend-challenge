@@ -70,20 +70,20 @@ export default {
         this.childElement = this.$slots.default[0].elm
       }
     },
-    enableTransition () {
+    setChildPointerEvents (pointerEvents) {
       this.childElement
         .style
         .setProperty(
-          'transition',
-          'all 0.3s ease',
+          'pointer-events',
+          pointerEvents,
         )
     },
-    disableTransition () {
+    setChildTransition (transition) {
       this.childElement
         .style
         .setProperty(
           'transition',
-          'none',
+          transition,
         )
     },
     setTranslateX (x) {
@@ -101,7 +101,8 @@ export default {
       return this.$refs.trackWrapper.getBoundingClientRect()
     },
     onPanStart () {
-      this.disableTransition()
+      this.setChildPointerEvents('none')
+      this.setChildTransition('none')
     },
     onPanMove (event) {
       this.setTranslateX(this.curX + event.deltaX)
@@ -112,7 +113,8 @@ export default {
       this.curX = x > 0
         ? 0
         : Math.max(x, max)
-      this.enableTransition()
+      this.setChildPointerEvents('all')
+      this.setChildTransition('all 0.3s ease')
       this.$nextTick(() => {
         this.setTranslateX(this.curX)
       })
