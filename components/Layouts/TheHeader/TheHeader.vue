@@ -3,20 +3,25 @@
     :class="{
       'the-header': true,
       'the-header--shadowed': isShadowed,
+      'the-header--dark': $theme.dark,
     }"
   >
-    <ResponsiveContainer class="the-header__container">
-      <slot />
+    <ResponsiveContainer>
+      <div class="the-header__wrapper">
+        <InputSwitchDarkMode />
+      </div>
     </ResponsiveContainer>
   </header>
 </template>
 
 <script>
 import _throttle from 'lodash/throttle'
+import { InputSwitchDarkMode } from '@/components/InputSwitchDarkMode'
 import { ResponsiveContainer } from '../ResponsiveContainer'
 export default {
   components: {
     ResponsiveContainer,
+    InputSwitchDarkMode,
   },
   data () {
     return {

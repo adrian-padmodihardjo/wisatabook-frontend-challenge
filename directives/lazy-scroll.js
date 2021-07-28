@@ -34,8 +34,12 @@ export const lazyScroll = function (el, binding) {
    * target is the observed element,
    * put at the bottom of component.
    */
-  const target = document.createElement('div')
-  el.append(target)
+  let target = el.querySelector('div[role="observer-target"]')
+  if (!target) {
+    target = document.createElement('div')
+    target.setAttribute('role', 'observer-target')
+    el.append(target)
+  }
 
   if (el.observer instanceof IntersectionObserver === false) {
     const cb = observerCallback(binding.value)

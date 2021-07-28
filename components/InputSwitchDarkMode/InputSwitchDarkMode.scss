@@ -1,0 +1,14 @@
+.input-switch-dark-mode {
+  display: inline-flex;
+  flex-flow: row nowrap;
+  justify-content: flex-start;
+  align-items: center;
+
+  &__icon {
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    margin-right: 9px;
+    fill: currentColor;
+  }
+}
