@@ -1,0 +1,9 @@
+.button-chip-group {
+  display: flex;
+  flex-flow: row nowrap;
+  white-space: nowrap;
+  justify-content: flex-start;
+  align-items: center;
+
+  transition: all 0.3s ease-out;
+}

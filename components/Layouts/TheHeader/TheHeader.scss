@@ -13,7 +13,7 @@
     T.$background-transition-duration
     T.$background-transition-timing;
 
-  @include T.dark() {
+  &--dark {
     background-color: T.$background-dark;
   }
 

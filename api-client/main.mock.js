@@ -1,7 +1,6 @@
 import axios from 'axios'
 import MockAdapter from 'axios-mock-adapter'
 import _pick from 'lodash/pick'
-import _filter from 'lodash/filter'
 import propertyDetails from '../mocks/property-details.mock.json'
 
 export function handlePropertyDetailsResponse () {
@@ -15,11 +14,19 @@ export function handlePropertyDetailsResponse () {
 }
 
 export function handlePropertyImagesResponse ({ params } = {}) {
-  const { page, limit } = params
-  const data = _filter(propertyDetails.images, (_, index) => {
+  const { page, limit, caption } = params
+  let source = propertyDetails.images
+  if (typeof caption === 'string') {
+    source = source.filter((img) => {
+      return img.caption === caption
+    })
+  }
+
+  const data = source.filter((img, index) => {
     const start = (page - 1) * limit
     const end = (page * limit) - 1
-    return start <= index && index <= end
+    const hasMatchedIndex = start <= index && index <= end
+    return hasMatchedIndex
   })
 
   return [200, data]

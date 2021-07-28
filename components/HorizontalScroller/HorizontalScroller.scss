@@ -1,0 +1,64 @@
+@use "sass:math" as math;
+
+$--icon-size: 7px;
+
+.horizontal-scroller {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+
+  &__track-wrapper {
+    display: flex;
+    flex: 1 1 auto;
+    overflow: hidden;
+  }
+  
+  &__track {
+    display: flex;
+    flex: 1 1 auto;
+    white-space: nowrap;
+    contain: content;
+  }
+
+  &__btn-prev,
+  &__btn-next {
+    cursor: pointer;
+    flex: none;
+    position: relative;
+    display: inline-block;
+    width: 52px;
+    height: 48px;
+    background-color: transparent;
+    border: none;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: calc((100% - #{$--icon-size}) / 2);
+      width: $--icon-size;
+      height: $--icon-size;
+      border: 2px solid rgba(0,0,0,.54);
+      border-right: none;
+      border-top: none;
+      transform-origin: center;
+    }
+  }
+
+  &__btn-prev {
+    justify-content: flex-start;
+
+    &::before {
+      left: calc((100% - #{$--icon-size}) / 2);
+      transform: rotate(45deg);
+    }
+  }
+
+  &__btn-next {
+    justify-content: flex-end;
+    
+    &::before {
+      right: calc((100% - #{$--icon-size}) / 2);
+      transform: rotate(45deg + 180deg);
+    }
+  }
+}
