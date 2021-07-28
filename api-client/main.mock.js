@@ -15,11 +15,15 @@ export function handlePropertyDetailsResponse () {
 }
 
 export function handlePropertyImagesResponse ({ params } = {}) {
-  const { page, limit } = params
-  const data = _filter(propertyDetails.images, (_, index) => {
+  const { page, limit, caption } = params
+  const data = _filter(propertyDetails.images, (img, index) => {
     const start = (page - 1) * limit
     const end = (page * limit) - 1
-    return start <= index && index <= end
+    const hasMatchedIndex = start <= index && index <= end
+    const hasMatchedCaption = typeof caption === 'string'
+      ? img.caption === caption
+      : true
+    return hasMatchedIndex && hasMatchedCaption
   })
 
   return [200, data]

@@ -41,5 +41,39 @@ describe('main API client', () => {
         .then(() => done())
         .catch(done)
     })
+
+    describe('correctly filter images by caption', () => {
+      const captions = [
+        'Featured Image',
+        'Room',
+        'Lobby',
+      ]
+
+      const chunkSize = 9
+      for (const caption of captions) {
+        const filtered = propertyDetails.images.filter((img) => {
+          return img.caption === caption
+        })
+        const chunks = _chunk(filtered, chunkSize)
+        test(`correctly filter images with "${caption}" caption`, (done) => {
+          const promises = chunks.map((chunk, i) => {
+            return getImages('1234567', {
+              page: i + 1,
+              limit: chunkSize,
+              caption,
+            }).then((res) => {
+              res.data.forEach((img) => {
+                expect(img).toEqual(
+                  expect.objectContaining({ caption }),
+                )
+              })
+            })
+          })
+          Promise.all(promises)
+            .then(() => done())
+            .catch(done)
+        })
+      }
+    })
   })
 })
