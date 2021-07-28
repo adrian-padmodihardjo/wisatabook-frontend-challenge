@@ -1,7 +1,15 @@
 <template>
-  <div />
+  <div>
+    <TheHeader />
+    <div style="height: 3000px;" />
+  </div>
 </template>
 
 <script>
-export default {}
+import { TheHeader } from '@/components/Layouts/TheHeader'
+export default {
+  components: {
+    TheHeader,
+  },
+}
 </script>
