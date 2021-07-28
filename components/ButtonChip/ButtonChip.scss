@@ -1,0 +1,99 @@
+@use "@/assets/stylesheet/theme" as T;
+
+$--button-chip-height: 32px;
+
+.button-chip {
+  cursor: pointer;
+  position: relative;
+  appearance: none;
+  display: inline-block;
+  height: $--button-chip-height;
+  padding: 0 12px;
+  border-radius: $--button-chip-height;
+  border: thin solid rgba(0, 0, 0, 0.12);
+  background-color: transparent;
+
+  font-size: 14px;
+  font-weight: bolder;
+  line-height: 20px;
+  white-space: nowrap;
+
+  transition: all 
+    T.$background-transition-duration
+    T.$background-transition-timing;
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+  }
+
+  &::before {
+    z-index: 1;
+    background-color: currentColor;
+    opacity: 0;
+    transition: all 0.3s ease-out;
+    transition-property: background-color, opacity;
+  }
+  &::after {
+    z-index: 0;
+    opacity: 0;
+    box-shadow:
+      0 3px 1px -2px rgb(0, 0, 0, 0.2),
+      0 4px 2px 0 rgb(0, 0, 0, 0.1),
+      0 1px 5px 0 rgb(0, 0, 0, 0.1);
+
+    transition: opacity 0.3s ease-out;
+  }
+
+  & + & {
+    margin: 4px 0;
+    margin-left: 8px;
+  }
+
+  &__text {
+    color: rgba(0,0,0,.87);
+  }
+
+  &--dark {
+    border-color: rgba(255, 255, 255, 0.12);
+  }
+
+  &--dark & {
+    &__text {
+      color: white;
+    }
+  }
+
+  &:hover {
+    &::before {
+      opacity: 0.04;
+    }
+  }
+
+  &:focus {
+    &::before {
+      opacity: 0.12;
+    }
+  }
+
+  &:active {
+    &::after {
+      opacity: 1;
+    }
+  }
+
+  &--active {
+    &::before,
+    &:hover::before {
+      opacity: 0.08;
+    }
+  }
+  &--active & {
+    &__text {
+      color: #1877f2 !important;
+    }
+  }
+}
