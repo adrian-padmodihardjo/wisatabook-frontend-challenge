@@ -1,3 +1,5 @@
+@use "@/assets/stylesheet/theme" as T;
+
 .the-header {
   z-index: 10;
   position: sticky;
@@ -7,6 +9,13 @@
   display: block;
   height: 64px;
   background-color: white;
+  transition: background-color
+    T.$background-transition-duration
+    T.$background-transition-timing;
+
+  @include T.dark() {
+    background-color: T.$background-dark;
+  }
 
   &::before {
     content: '';
@@ -26,7 +35,12 @@
     }
   }
 
-  &__container {
+  &__wrapper {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
     height: 100%;
+    padding: 4px 12px;
+    margin: 0 12px;
   }
 }
