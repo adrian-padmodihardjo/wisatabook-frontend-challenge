@@ -16,6 +16,9 @@ export default {
     ],
   },
   components: false,
+  css: [
+    '@/assets/stylesheet/preflight.scss',
+  ],
   buildModules: [
     '@nuxtjs/eslint-module',
   ],
