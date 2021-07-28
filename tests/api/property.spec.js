@@ -43,11 +43,7 @@ describe('main API client', () => {
     })
 
     describe('correctly filter images by caption', () => {
-      const captions = [
-        'Featured Image',
-        'Room',
-        'Lobby',
-      ]
+      const captions = propertyDetails.images.map(img => img.caption)
 
       const chunkSize = 9
       for (const caption of captions) {
