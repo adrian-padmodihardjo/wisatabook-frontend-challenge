@@ -18,6 +18,5 @@ export default {
   components: false,
   buildModules: [
     '@nuxtjs/eslint-module',
-    '@nuxtjs/tailwindcss',
   ],
 }
