@@ -1,3 +1,4 @@
+import axios from 'axios'
 import MockAdapter from 'axios-mock-adapter'
 import _pick from 'lodash/pick'
 import _filter from 'lodash/filter'
@@ -24,7 +25,7 @@ export function handlePropertyImagesResponse ({ params } = {}) {
   return [200, data]
 }
 
-export function mockApiClient (axiosInstance) {
+export function mockApiClient (axiosInstance = axios.create()) {
   const mock = new MockAdapter(axiosInstance)
   mock
     .onGet(/\/(property-details)\/[0-9]+\/?$/)

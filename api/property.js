@@ -1,14 +1,14 @@
-import apiClient from '../api-client/main'
+import { request } from '../api-client/main'
 
 export function getDetails (propertyId) {
-  return apiClient({
+  return request.call(this, {
     method: 'GET',
     url: `/property-details/${propertyId}`,
   })
 }
 
 export function getImages (propertyId, params) {
-  return apiClient({
+  return request.call(this, {
     method: 'GET',
     url: `/property-images/${propertyId}`,
     params,
