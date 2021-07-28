@@ -1,0 +1,10 @@
+$background: #fff;
+$background-dark: rgb(18, 18, 18);
+$background-transition-duration: 0.3s;
+$background-transition-timing: linear;
+
+@mixin dark() {
+  &--dark {
+    @content;
+  }
+}
