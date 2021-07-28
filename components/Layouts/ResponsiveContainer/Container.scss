@@ -1,0 +1,14 @@
+@use "@/assets/stylesheet/breakpoints" as B;
+.container {
+  width: 100%;
+  padding: 12px;
+  margin: 0 auto;
+
+  @include B.md() {
+    max-width: 900px;
+  }
+
+  @include B.lg() {
+    max-width: 1024px;
+  }
+}
