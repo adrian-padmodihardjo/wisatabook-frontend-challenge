@@ -11,7 +11,7 @@
         <div class="prop-header__rating-wrapper">
           <RatingStar
             class="prop-header__rating-star"
-            :rating="4.5 || starRating"
+            :rating="starRating"
           />
           <span class="prop-header__chip">
             {{ propertyCategory }}
