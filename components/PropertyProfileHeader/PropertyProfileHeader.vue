@@ -76,11 +76,16 @@ export default {
       return this.catalog?.review_rating
     },
   },
-  watch: {
-    propertyId: {
-      immediate: true,
-      handler: 'fetchPropertyDetails',
-    },
+  mounted () {
+    this.$watch(
+      'propertyId',
+      function (newVal, oldVal) {
+        if (newVal !== oldVal) {
+          this.fetchPropertyDetails()
+        }
+      },
+      { immediate: true },
+    )
   },
   methods: {
     async fetchPropertyDetails () {
@@ -89,6 +94,10 @@ export default {
         return
       }
       const { data } = await getDetails.call(mock, this.propertyId)
+        .catch((e) => {
+          console.log({ e })
+          throw e
+        })
       this.details = data
     },
   },
