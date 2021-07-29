@@ -1,0 +1,11 @@
+.property-gallery {
+
+  &__divider {
+    display: block;
+    margin: 32px 0;
+    color: transparent;
+    background-color: transparent;
+    border-color: currentColor;
+    opacity: 0.12;
+  }
+}

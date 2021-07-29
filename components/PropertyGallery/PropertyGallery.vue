@@ -8,6 +8,7 @@
       :column="cols"
       :images="imagesToShow"
     />
+    <hr class="property-gallery__divider">
   </div>
 </template>
 
@@ -98,3 +99,7 @@ export default {
   },
 }
 </script>
+
+<style lang="scss" scoped>
+@use "./PropertyGallery.scss";
+</style>
