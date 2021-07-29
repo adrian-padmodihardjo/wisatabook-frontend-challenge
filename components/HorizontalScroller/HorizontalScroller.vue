@@ -1,5 +1,10 @@
 <template>
-  <div class="horizontal-scroller">
+  <div
+    :class="{
+      'horizontal-scroller': true,
+      'horizontal-scroller--dark': $theme.dark
+    }"
+  >
     <!-- must contain only one element -->
     <button
       class="horizontal-scroller__btn-prev"

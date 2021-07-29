@@ -61,4 +61,11 @@ $--icon-size: 7px;
       transform: rotate(45deg + 180deg);
     }
   }
+
+  &--dark & {
+    &__btn-prev::before,
+    &__btn-next::before {
+      border-color: white;
+    }
+  }
 }
