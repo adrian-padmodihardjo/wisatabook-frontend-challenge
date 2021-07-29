@@ -1,4 +1,5 @@
 @use "@/assets/stylesheet/theme" as T;
+@use "@/assets/stylesheet/breakpoints" as B;
 
 .the-header {
   z-index: 10;
@@ -7,11 +8,12 @@
   right: 0;
   left: 0;
   display: block;
-  height: 64px;
+  height: 56px;
   background-color: white;
-  transition: background-color
+  transition: all
     T.$background-transition-duration
     T.$background-transition-timing;
+  transition-property: background-color, height;
 
   &--dark {
     background-color: T.$background-dark;
@@ -42,5 +44,9 @@
     height: 100%;
     padding: 4px 12px;
     margin: 0 12px;
+  }
+
+  @include B.md () {
+    height: 64px;
   }
 }
