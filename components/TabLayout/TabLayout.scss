@@ -7,8 +7,7 @@
   justify-content: flex-start;
   align-items: stretch;
   height: 53px;
-  color: rgba(0, 0, 0, 0.87);
-
+  
   &__slider {
     opacity: 0;
     position: absolute;
@@ -50,10 +49,6 @@
       border-top: 1px solid rgba(0, 0, 0, 0.12);
       border-bottom: none;
     }
-  }
-
-  &--dark {
-    color: white;
   }
 
   &--dark & {

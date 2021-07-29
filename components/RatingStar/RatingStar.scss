@@ -1,0 +1,34 @@
+.rating-star {
+  display: inline-flex;
+  margin: 0;
+  padding: 0;
+
+  &__icon {
+    position: relative;
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+
+    &__background {
+      position: absolute;
+      inset: 0;
+      fill: #ff9800;
+
+      &--disabled {
+        fill: rgba(0, 0, 0, 0.2);
+      }
+    }
+
+    &__foreground {
+      position: absolute;
+      inset: 0;
+      opacity: 0.2;
+    }
+  }
+
+  &--dark & {
+    &__icon__foreground {
+      filter: invert(100%);
+    }
+  }
+}
