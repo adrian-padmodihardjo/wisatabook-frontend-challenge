@@ -1,0 +1,64 @@
+@use "@/assets/stylesheet/breakpoints" as B;
+
+.tab-layout {
+  position: relative;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: flex-start;
+  align-items: stretch;
+  height: 53px;
+  color: rgba(0, 0, 0, 0.87);
+
+  &__slider {
+    opacity: 0;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    display: block;
+    width: 100px;
+    height: 2px;
+    transition: all 0.3s ease;
+
+    background-color: currentColor;
+  }
+
+  &__track {
+    height: 100%;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+    align-items: stretch;
+    border-bottom: 1px solid currentColor;
+  }
+
+  &__spacer {
+    display: none;
+    flex: 1 1 auto;
+
+    @include B.sm () {
+      display: inline-block;
+    }
+  }
+
+  @include B.sm () {
+    &__slider {
+      bottom: unset;
+      top: 0;
+    }
+
+    &__track {
+      border-top: 1px solid rgba(0, 0, 0, 0.12);
+      border-bottom: none;
+    }
+  }
+
+  &--dark {
+    color: white;
+  }
+
+  &--dark & {
+    &__track {
+      border-color: rgba(255, 255, 255, 0.12);
+    }
+  }
+}
