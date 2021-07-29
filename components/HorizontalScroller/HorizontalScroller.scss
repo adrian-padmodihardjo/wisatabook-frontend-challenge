@@ -1,4 +1,5 @@
 @use "sass:math" as math;
+@use "@/assets/stylesheet/breakpoints" as B;
 
 $--icon-size: 7px;
 
@@ -6,6 +7,7 @@ $--icon-size: 7px;
   display: flex;
   justify-content: flex-start;
   align-items: center;
+  margin: 0 12px;
 
   &__track-wrapper {
     display: flex;
@@ -25,7 +27,7 @@ $--icon-size: 7px;
     cursor: pointer;
     flex: none;
     position: relative;
-    display: inline-block;
+    display: none;
     width: 52px;
     height: 48px;
     background-color: transparent;
@@ -59,6 +61,22 @@ $--icon-size: 7px;
     &::before {
       right: calc((100% - #{$--icon-size}) / 2);
       transform: rotate(45deg + 180deg);
+    }
+  }
+
+  &--dark & {
+    &__btn-prev::before,
+    &__btn-next::before {
+      border-color: white;
+    }
+  }
+
+  @include B.sm () {
+    margin: 0;
+
+    &__btn-prev,
+    &__btn-next {
+      display: inline-block;
     }
   }
 }

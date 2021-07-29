@@ -37,6 +37,7 @@
     "postcss": "^8.3.5",
     "sass": "^1.36.0",
     "sass-loader": "10",
+    "svg-to-vue-component": "^0.3.8",
     "vue-jest": "^3.0.7"
   }
 }

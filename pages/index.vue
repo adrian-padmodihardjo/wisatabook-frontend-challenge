@@ -2,6 +2,7 @@
   <div>
     <TheHeader />
     <ResponsiveContainer>
+      <PropertyGalleryCategories />
       <PropertyGalleryTags
         property-id="9000248525"
         style="margin: 0 -12px; padding: 16px 0;"
@@ -18,12 +19,14 @@
 <script>
 import { TheHeader } from '@/components/Layouts/TheHeader'
 import { ResponsiveContainer } from '@/components/Layouts/ResponsiveContainer'
+import { PropertyGalleryCategories } from '@/components/PropertyGalleryCategories'
 import { PropertyGallery } from '@/components/PropertyGallery'
 import { PropertyGalleryTags } from '@/components/PropertyGalleryTags'
 export default {
   components: {
     TheHeader,
     ResponsiveContainer,
+    PropertyGalleryCategories,
     PropertyGallery,
     PropertyGalleryTags,
   },

@@ -25,4 +25,25 @@ export default {
   buildModules: [
     '@nuxtjs/eslint-module',
   ],
+  build: {
+    extend (config) {
+      const svgRule = config.module.rules.find((rule) => {
+        return rule.test.test('.svg')
+      })
+
+      const defaultRule = [...svgRule.use]
+      delete svgRule.use
+
+      svgRule.oneOf = [
+        {
+          resourceQuery: /vue/,
+          use: [
+            'vue-loader',
+            'svg-to-vue-component/loader',
+          ],
+        },
+        ...defaultRule,
+      ]
+    },
+  },
 }
