@@ -1,0 +1,74 @@
+@use "@/assets/stylesheet/breakpoints" as B;
+
+.tab-layout-item {
+  flex: 1 1 auto;
+  cursor: pointer;
+  appearance: none;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 16px;
+  background-color: transparent;
+
+  &,
+  &:hover,
+  &:active,
+  &:focus {
+    border: none;
+    outline: none;
+  }
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-color: currentColor;
+    opacity: 0;
+
+    transition: all 0.3s ease;
+    transition-property: background-color, opacity;
+  }
+
+  &:hover::before {
+    opacity: 0.12;
+  }
+
+  &__icon {
+    flex: none;
+    display: inline-block;
+    width: 22px;
+    height: 22px;
+    fill: currentColor;
+  }
+
+  &__label {
+    display: none;
+    font-weight: bold;
+    font-size: 14px;
+    padding-top: 2px;
+    color: inherit;
+  }
+
+  &__icon + &__label {
+    padding-left: 8px;
+  }
+
+  @include B.sm () {
+    flex: none;
+
+    &__icon {
+      width: 16px;
+      height: 16px;
+    }
+
+    &__label {
+      display: inline-block;
+      flex: 1 1 auto;
+    }
+  }
+
+  &--dark {
+    color: white;
+  }
+}
