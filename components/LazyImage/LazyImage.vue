@@ -1,5 +1,11 @@
 <template>
-  <div class="lazy-img">
+  <div
+    :class="{
+      'lazy-img': true,
+      'lazy-img--clickable': $listeners['click']
+    }"
+    v-on="$listeners"
+  >
     <template v-for="set in srcset">
       <img
         v-if="canRenderImage(set)"

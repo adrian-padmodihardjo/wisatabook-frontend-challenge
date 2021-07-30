@@ -12,4 +12,12 @@
     object-fit: cover;
     object-position: center;
   }
+
+  &--clickable {
+    cursor: pointer;
+
+    &:hover {
+      opacity: 0.85;
+    }
+  }
 }

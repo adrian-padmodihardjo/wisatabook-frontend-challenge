@@ -11,7 +11,7 @@ export const theme = Vue.observable({
     lg: false,
     xl: false,
   },
-  breakpoints,
+  breakpointConfig: breakpoints,
   viewportWidth: Infinity,
 })
 

@@ -8,4 +8,9 @@
     border-color: currentColor;
     opacity: 0.12;
   }
+
+  &__carousel-wrapper {
+    display: flex;
+    justify-content: center;
+  }
 }

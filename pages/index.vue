@@ -17,7 +17,7 @@
         :caption="caption"
       />
     </ResponsiveContainer>
-    <TheFooter />
+    <TheFooter :style="footerStyles" />
   </div>
 </template>
 
@@ -29,6 +29,7 @@ import { PropertyProfileHeader } from '@/components/PropertyProfileHeader'
 import { PropertyGalleryCategories } from '@/components/PropertyGalleryCategories'
 import { PropertyGallery } from '@/components/PropertyGallery'
 import { PropertyGalleryTags } from '@/components/PropertyGalleryTags'
+
 export default {
   components: {
     TheHeader,
@@ -43,7 +44,26 @@ export default {
     return {
       propertyId: '9000248525',
       caption: undefined,
+      booted: false,
     }
+  },
+  computed: {
+    footerStyles () {
+      if (this.booted) {
+        return null
+      }
+      return {
+        position: 'fixed',
+        right: 0,
+        bottom: 0,
+        left: 0,
+      }
+    },
+  },
+  mounted () {
+    this.$nextTick(() => {
+      this.booted = true
+    })
   },
 }
 </script>
