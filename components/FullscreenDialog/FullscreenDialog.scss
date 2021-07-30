@@ -1,0 +1,45 @@
+.fs-dialog {
+  z-index: 10;
+  position: fixed;
+  pointer-events: none;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+
+  &__overlay,
+  &__body {
+    opacity: 0;
+    transition: all 0.3s ease;
+    transition-property: opacity;
+  }
+
+  &__overlay {
+    z-index: 0;
+    position: absolute;
+    inset: 0;
+    background-color: rgb(33, 33, 33);
+  }
+
+  &__body {
+    flex: 1 1 auto;
+    margin: 2rem;
+  }
+
+  &--show {
+    pointer-events: all;
+  }
+  &--show & {
+    &__overlay {
+      opacity: 0.46;
+    }
+
+    &__body {
+      opacity: 1;
+    }
+  }
+}
