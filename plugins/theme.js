@@ -1,9 +1,16 @@
 import Vue from 'vue'
+import breakpoints from '@/assets/stylesheet/_breakpoints.scss'
 
 // set theme as observable, instead of using Vuex
 // to minimize bundle size
 export const theme = Vue.observable({
   dark: false,
+  breakpoint: {
+    sm: false,
+    md: false,
+    lg: false,
+    xl: false,
+  },
 })
 
 // expose observable value mutation
@@ -22,6 +29,16 @@ export function setDarkMode (dark) {
   }
 
   theme.dark = dark
+}
+
+export function syncBreakpoint () {
+  if (!window) {
+    return
+  }
+  for (const [name, minWidth] of Object.entries(breakpoints)) {
+    const matched = window.innerWidth >= parseInt(minWidth)
+    theme.breakpoint[name] = matched
+  }
 }
 
 // use provide/inject for observable theme object
@@ -47,4 +64,9 @@ export default function ({ app }) {
       }
     },
   })
+
+  if (process.client || process.browser) {
+    syncBreakpoint()
+    window.addEventListener('resize', syncBreakpoint)
+  }
 }
