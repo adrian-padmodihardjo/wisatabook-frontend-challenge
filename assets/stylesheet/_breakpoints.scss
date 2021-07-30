@@ -26,3 +26,10 @@ $breakpoint-xl: 1264px;
     @content;
   }
 }
+
+:export {
+  sm: $breakpoint-sm;
+  md: $breakpoint-md;
+  lg: $breakpoint-lg;
+  xl: $breakpoint-xl;
+}
