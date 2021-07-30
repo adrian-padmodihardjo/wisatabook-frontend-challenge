@@ -11,6 +11,8 @@ export const theme = Vue.observable({
     lg: false,
     xl: false,
   },
+  breakpoints,
+  viewportWidth: Infinity,
 })
 
 // expose observable value mutation
@@ -39,6 +41,7 @@ export function syncBreakpoint () {
     const matched = window.innerWidth >= parseInt(minWidth)
     theme.breakpoint[name] = matched
   }
+  theme.viewportWidth = window.innerWidth
 }
 
 // use provide/inject for observable theme object
