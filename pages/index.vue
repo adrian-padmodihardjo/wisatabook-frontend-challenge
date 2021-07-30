@@ -5,6 +5,7 @@
       <PropertyProfileHeader
         :property-id="propertyId"
         style="margin: 24px 0; padding: 24px 0; margin-bottom: 40px;"
+        @load="onProfileLoaded"
       />
       <PropertyGalleryCategories />
       <PropertyGalleryTags
@@ -43,8 +44,17 @@ export default {
   data () {
     return {
       propertyId: '9000248525',
+      profile: null,
       caption: undefined,
       booted: false,
+    }
+  },
+  head () {
+    if (!this.profile) {
+      return {}
+    }
+    return {
+      title: `${this.profile?.name} · Secret Deals · Wisatabook`,
     }
   },
   computed: {
@@ -64,6 +74,11 @@ export default {
     this.$nextTick(() => {
       this.booted = true
     })
+  },
+  methods: {
+    onProfileLoaded (profile) {
+      this.profile = profile
+    },
   },
 }
 </script>
