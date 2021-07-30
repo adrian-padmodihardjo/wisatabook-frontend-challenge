@@ -3,8 +3,16 @@
     <ImagesGrid
       class="property-gallery__images-grid"
       :column="cols"
-      :images="images"
-    />
+      :items="images"
+    >
+      <template #item="{ item, itemIndex }">
+        <LazyImage
+          :alt="item.caption"
+          :srcset="item.srcset"
+          @click="onClickImage(item, itemIndex)"
+        />
+      </template>
+    </ImagesGrid>
     <hr class="property-gallery__divider">
     <LazyScrollObserver
       ref="lazyScrollObserver"
@@ -13,6 +21,15 @@
       }"
       @intersect="onObserverIntersect"
     />
+    <FullscreenDialog v-model="showCarousel">
+      <div class="property-gallery__carousel-wrapper">
+        <PropertyGalleryCarousel
+          v-model="activeCarouselItemIndex"
+          :items="carouselImages"
+          @change="onCarouselIndexChanged"
+        />
+      </div>
+    </FullscreenDialog>
   </div>
 </template>
 
@@ -21,13 +38,19 @@ import { ImagesGrid } from '@/components/ImagesGrid'
 import { mockApiClient } from '@/api-client/main.mock'
 import { getImages } from '@/api/property'
 import { LazyScrollObserver } from '@/components/LazyScrollObserver'
+import { LazyImage } from '../LazyImage'
+import { FullscreenDialog } from '../FullscreenDialog'
+import { PropertyGalleryCarousel } from '../PropertyGalleryCarousel'
 
 const mock = mockApiClient()
 
 export default {
   components: {
     ImagesGrid,
+    LazyImage,
     LazyScrollObserver,
+    FullscreenDialog,
+    PropertyGalleryCarousel,
   },
   props: {
     propertyId: {
@@ -46,7 +69,26 @@ export default {
       cols: 3,
       rows: 3,
       currentPage: 0,
+
+      showCarousel: false,
+      activeCarouselItemIndex: 0,
     }
+  },
+  computed: {
+    carouselImages () {
+      return this.images.map((img) => {
+        // eslint-disable-next-line no-unused-vars
+        const [xs, sm, lg] = img.srcset
+        const srcset = [
+          { ...sm, onVisibleOnly: false },
+          { ...lg, minWidth: 350 },
+        ]
+        return {
+          ...img,
+          srcset,
+        }
+      })
+    },
   },
   watch: {
     caption: {
@@ -100,15 +142,24 @@ export default {
         { src: size_xs, minWidth: 0 },
         {
           src: size_sm,
-          minWidth: 0,
+          minWidth: 350,
           onVisibleOnly: true,
         },
         {
           src: size_lg,
-          minWidth: parseInt(this.$theme.breakpoints.md),
+          minWidth: parseInt(this.$theme.breakpointConfig.md),
           onVisibleOnly: true,
         },
       ]
+    },
+    onClickImage (item, itemIndex) {
+      this.activeCarouselItemIndex = itemIndex
+      this.showCarousel = true
+    },
+    onCarouselIndexChanged (newIndex) {
+      if ((newIndex + 2) === this.images.length) {
+        this.appendImages(this.currentPage + 1)
+      }
     },
   },
 }
