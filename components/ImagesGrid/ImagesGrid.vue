@@ -15,11 +15,7 @@
 </template>
 
 <script>
-import { LazyImage } from '@/components/LazyImage'
 export default {
-  components: {
-    LazyImage,
-  },
   props: {
     items: {
       type: Array,
