@@ -1,14 +1,17 @@
 <template>
-  <div
-    v-lazy-scroll="fetchImages"
-    class="property-gallery"
-  >
+  <div class="property-gallery">
     <ImagesGrid
       class="property-gallery__images-grid"
       :column="cols"
       :images="imagesToShow"
     />
     <hr class="property-gallery__divider">
+    <LazyScrollObserver
+      :options="{
+        rootMargin: '0px 0px 56px 0px'
+      }"
+      @reach:bottom="onReachBottom"
+    />
   </div>
 </template>
 
@@ -16,16 +19,14 @@
 import { ImagesGrid } from '@/components/ImagesGrid'
 import { mockApiClient } from '@/api-client/main.mock'
 import { getImages } from '@/api/property'
-import { lazyScroll } from '@/directives/lazy-scroll'
+import { LazyScrollObserver } from '@/components/LazyScrollObserver'
 
 const mock = mockApiClient()
 
 export default {
   components: {
     ImagesGrid,
-  },
-  directives: {
-    lazyScroll,
+    LazyScrollObserver,
   },
   props: {
     propertyId: {
@@ -51,12 +52,29 @@ export default {
       if (!Array.isArray(images)) {
         return []
       }
+
+      const { breakpoint } = this.$theme
+      const sizeToUse = breakpoint.md
+        ? 'size_lg'
+        : 'size_sm'
       return images.map((obj) => {
         return {
           caption: obj.caption,
-          src: obj.size_lg,
+          preview: obj.size_xs,
+          actual: obj[sizeToUse],
         }
       })
+    },
+    imagesCacheMap () {
+      const { images } = this
+      if (!Array.isArray(images)) {
+        return {}
+      }
+      return images.reduce((obj, img, index) => {
+        const id = this.getImageIdentifier(img)
+        obj[id] = img
+        return obj
+      }, {})
     },
   },
   watch: {
@@ -64,37 +82,45 @@ export default {
       immediate: false,
       handler (newVal, oldVal) {
         if (newVal !== oldVal) {
-          this.resetImages()
-          this.fetchImages()
+          this.refreshImages()
         }
       },
     },
   },
   methods: {
-    resetImages () {
-      this.currentPage = 0
-      this.images = []
+    getImageIdentifier (imgData) {
+      return imgData?.size_lg
     },
-    // this method must return boolean,
-    // to determine whether intersection observer
-    // should be restarted or not
-    async fetchImages () {
-      this.currentPage += 1
+    async onReachBottom (entry, observer) {
+      await this.appendImages(this.currentPage + 1)
+    },
+    async refreshImages () {
+      const newImages = await this.fetchImages(1)
+      this.images = newImages
+      this.currentPage = 1
+    },
+    async appendImages (page) {
+      const newImages = await this.fetchImages(page)
+      this.images.push(...newImages)
+      this.currentPage = page
+    },
+    async fetchImages (page) {
       const limit = this.cols * this.rows
       const { data } = await getImages.call(mock, this.propertyId, {
-        page: this.currentPage,
         caption: this.caption,
+        page,
         limit,
       })
       if (Array.isArray(data) && data.length) {
-        this.images.push(...data)
-
-        // when array size is less than limit,
-        // assume that there's no data available within next page
-        return data.length === limit
-      } else {
-        return false
+        return data.map((img) => {
+          const id = this.getImageIdentifier(img)
+          if (id in this.imagesCacheMap) {
+            return this.imagesCacheMap[id]
+          }
+          return img
+        })
       }
+      return []
     },
   },
 }
