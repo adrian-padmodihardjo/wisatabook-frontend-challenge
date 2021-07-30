@@ -7,10 +7,10 @@
   >
     <ResponsiveContainer>
       <div class="the-footer__wrapper">
-        <span class="the-footer__brand-name">Adrian Padmodihardjo</span>
-        <span>&nbsp;&nbsp; · &nbsp;&nbsp;Terms & Condition</span>
-        <i class="the-footer__spacer" />
-        <small>Frontend Challenge</small>
+        <strong>Adrian Padmodihardjo</strong>
+        <span>
+          <small class="the-footer__right-text">Wisatabook Frontend Challenge</small>
+        </span>
       </div>
     </ResponsiveContainer>
   </footer>

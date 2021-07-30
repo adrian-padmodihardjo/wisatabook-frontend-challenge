@@ -10,32 +10,44 @@
   font-family: Roboto;
   
   &__wrapper {
-    display: flex;
-    flex-flow: row nowrap;
-    align-items: center;
-    padding: 4px 0;
+    display: block;
     
     font-size: 15px;
-  }
+    vertical-align: middle;
 
-  &__brand-name {
-    position: relative;
-    display: inline-block;
-    font-size: 1rem;
-    font-family: 'Google Sans';
+    * {
+      display: inline;
+      word-break: keep-all;
+      white-space: nowrap;
+      padding: 6px 0;
+    }
 
-    &::before {
-      content: '©';
-      display: inline-block;
-      position: relative;
-      padding-right: 0.25em;;
-      font-family: Roboto;
+    *:not(:last-child) {
+      float: left;
+    }
+
+    *:last-child {
+      float: right;
+    }
+
+    &::after {
+      clear: both;
+      content: '';
+      display: block;
     }
   }
 
-  &__spacer {
-    display: inline-block;
-    flex: 1 1 auto;
+  strong {
+    font-size: 1rem;
+    font-family: 'Google Sans';
+    font-weight: normal;
+
+    &::before {
+      content: '©';
+      display: inline;
+      padding-right: 0.25em;;
+      font-family: Roboto;
+    }
   }
 
   &--dark {
