@@ -1,30 +1,23 @@
 <template>
   <div class="images-grid">
     <figure
-      v-for="img in images"
-      :key="img.id"
+      v-for="(item, itemIndex) in items"
+      :key="item.id"
       class="images-grid__item"
       :style="gridItemStyles"
     >
-      <LazyImage
-        class="images-grid__item__img"
-        :alt="img.caption"
-        :srcset="img.srcset"
-        blur
-      />
+      <div class="images-grid__item__img">
+        <slot name="item" v-bind="{ item, itemIndex }" />
+      </div>
       <i class="images-grid__item__spinner" />
     </figure>
   </div>
 </template>
 
 <script>
-import { LazyImage } from '@/components/LazyImage'
 export default {
-  components: {
-    LazyImage,
-  },
   props: {
-    images: {
+    items: {
       type: Array,
       default: () => null,
     },
