@@ -1,4 +1,12 @@
-# wisatabook
+# wisatabook Frontend Challenge
+
+In response to Wisatabook's Senior Frontend Developer (Vue) role technical challenge.
+
+## Demo
+https://wisatabook-fe-challenge-adrian.netlify.app/
+
+## Incremental Builds
+App is built iteratively. Each build/release can be checked at [this link](https://github.com/adrian-padmodihardjo/wisatabook-frontend-challenge/releases).
 
 ## Build Setup
 
@@ -17,53 +25,44 @@ $ yarn start
 $ yarn generate
 ```
 
-For detailed explanation on how things work, check out the [documentation](https://nuxtjs.org).
+## Components
+This app doesn't use any library (or Vuetify, as used the source app). As for the components, most (if not all) are custom built.
 
-## Special Directories
+Each component is separated into:
+- index.js
 
-You can create the following extra directories, some of which have special behaviors. Only `pages` is required; you can delete them if you don't want to use their functionality.
+  this serves as the entrypoint (default and named export)
 
-### `assets`
+- \<name>.vue
 
-The assets directory contains your uncompiled assets such as Stylus or Sass files, images, or fonts.
+  this consists of template and script only
 
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/assets).
+- `<name>.scss
 
-### `components`
+  all style definitions goes here. and composed using [BEM](http://getbem.com/naming/).
 
-The components directory contains your Vue.js components. Components make up the different parts of your page and can be reused and imported into your pages, layouts and even other components.
+Some directories might include additional files.
 
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/components).
+## Usage of Packages
+Here are the packages that are used within this app.
 
-### `layouts`
+#### `axios`, `axios-mock-adapter`
+Instead of placing `Raw Data` as static asset and requiring it directly, this app simulate network request using `axios-mock-adapter`. In so, network request can replaced with actual network request, if ever required in the future. 
 
-Layouts are a great help when you want to change the look and feel of your Nuxt app, whether you want to include a sidebar or have distinct layouts for mobile and desktop.
+#### `jest`
+Since network request is simulated, `jest` is used to build some test suites regarding network response mocking. 
 
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/layouts).
+#### `fibers`
+Recommended for use with `sass` (or dart-sass). `sass` is chosen due to the deprecated `node-sass`, in which the latter doesn't support "@use" semantic (the recommended syntax for SASS import).
+
+#### `svg-to-vue-component`
+This is installed to demonstrate the use of Webpack Loader in transforming SVG files into Vue components.
+
+#### `hammerjs`
+This is used for pan gestures within images' caption filter (the horizontally scrolling chips above images grid).
+
+#### `lodash`
+Used mostly for event throttling, using Lodash#throttle. Since module is imported directly from each utility file, bundle size shouldn't be a concern.
 
 
-### `pages`
 
-This directory contains your application views and routes. Nuxt will read all the `*.vue` files inside this directory and setup Vue Router automatically.
-
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/get-started/routing).
-
-### `plugins`
-
-The plugins directory contains JavaScript plugins that you want to run before instantiating the root Vue.js Application. This is the place to add Vue plugins and to inject functions or constants. Every time you need to use `Vue.use()`, you should create a file in `plugins/` and add its path to plugins in `nuxt.config.js`.
-
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/plugins).
-
-### `static`
-
-This directory contains your static files. Each file inside this directory is mapped to `/`.
-
-Example: `/static/robots.txt` is mapped as `/robots.txt`.
-
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/static).
-
-### `store`
-
-This directory contains your Vuex store files. Creating a file in this directory automatically activates Vuex.
-
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/store).
