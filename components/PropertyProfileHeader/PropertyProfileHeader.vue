@@ -94,10 +94,6 @@ export default {
         return
       }
       const { data } = await getDetails.call(mock, this.propertyId)
-        .catch((e) => {
-          console.log({ e })
-          throw e
-        })
       this.details = data
     },
   },
