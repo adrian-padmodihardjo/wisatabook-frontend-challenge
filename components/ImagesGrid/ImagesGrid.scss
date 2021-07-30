@@ -45,7 +45,7 @@
       }
     }
 
-    img {
+    &__img {
       z-index: 1;
       position: absolute;
       object-fit: cover;
@@ -89,7 +89,7 @@
       border: none;
       padding: math.div($--gap, 2);
 
-      img {
+      &__img {
         @include image-gap(24px);
       }
     }
