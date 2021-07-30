@@ -1,14 +1,14 @@
 export default {
   target: 'static',
   head: {
-    title: 'wisatabook',
+    title: 'Wisatabook: Book Secret Hotel, Apartment & Villa Deals',
     htmlAttrs: {
       lang: 'en',
     },
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: '' },
+      { hid: 'description', name: 'description', content: 'Wisatabook is the best place to book secret hotel deals. Save time and money with our incredible member-only prices.' },
       { name: 'format-detection', content: 'telephone=no' },
     ],
     link: [

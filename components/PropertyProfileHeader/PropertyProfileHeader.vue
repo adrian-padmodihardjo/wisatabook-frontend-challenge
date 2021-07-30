@@ -95,6 +95,7 @@ export default {
       }
       const { data } = await getDetails.call(mock, this.propertyId)
       this.details = data
+      this.$emit('load', data)
     },
   },
 }
