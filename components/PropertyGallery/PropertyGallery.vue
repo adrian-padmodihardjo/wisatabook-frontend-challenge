@@ -160,6 +160,7 @@ export default {
       if ((newIndex + 2) === this.images.length) {
         this.appendImages(this.currentPage + 1)
       }
+      return []
     },
   },
 }
