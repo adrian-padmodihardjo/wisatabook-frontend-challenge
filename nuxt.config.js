@@ -24,7 +24,17 @@ export default {
   ],
   buildModules: [
     '@nuxtjs/eslint-module',
+    '@nuxtjs/pwa',
   ],
+  pwa: {
+    dev: true,
+    manifest: {
+      name: 'Exterior',
+      short_name: 'Exterior',
+      lang: 'en',
+      description: '',
+    },
+  },
   build: {
     extend (config) {
       const svgRule = config.module.rules.find((rule) => {
