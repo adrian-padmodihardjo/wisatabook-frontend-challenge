@@ -3,7 +3,7 @@
     <ImagesGrid
       class="property-gallery__images-grid"
       :column="cols"
-      :images="imagesToShow"
+      :images="images"
     />
     <hr class="property-gallery__divider">
     <LazyScrollObserver
@@ -40,42 +40,12 @@ export default {
   },
   data () {
     return {
+      imageObjectsCache: {},
       images: [],
       cols: 3,
       rows: 3,
       currentPage: 0,
     }
-  },
-  computed: {
-    imagesToShow () {
-      const { images } = this
-      if (!Array.isArray(images)) {
-        return []
-      }
-
-      const { breakpoint } = this.$theme
-      const sizeToUse = breakpoint.md
-        ? 'size_lg'
-        : 'size_sm'
-      return images.map((obj) => {
-        return {
-          caption: obj.caption,
-          preview: obj.size_xs,
-          actual: obj[sizeToUse],
-        }
-      })
-    },
-    imagesCacheMap () {
-      const { images } = this
-      if (!Array.isArray(images)) {
-        return {}
-      }
-      return images.reduce((obj, img, index) => {
-        const id = this.getImageIdentifier(img)
-        obj[id] = img
-        return obj
-      }, {})
-    },
   },
   watch: {
     caption: {
@@ -112,15 +82,22 @@ export default {
         limit,
       })
       if (Array.isArray(data) && data.length) {
-        return data.map((img) => {
-          const id = this.getImageIdentifier(img)
-          if (id in this.imagesCacheMap) {
-            return this.imagesCacheMap[id]
-          }
-          return img
-        })
+        return data.map(img => ({
+          // shouldn't refer to size_xs
+          id: img.size_xs,
+          srcset: this.transformToSourceSet(img),
+        }))
       }
       return []
+    },
+    transformToSourceSet (imgObject) {
+      // eslint-disable-next-line camelcase
+      const { size_xs, size_sm, size_lg } = imgObject
+      return [
+        { src: size_xs, minWidth: 0 },
+        { src: size_sm, minWidth: 0 },
+        { src: size_lg, minWidth: parseInt(this.$theme.breakpoints.md) },
+      ]
     },
   },
 }
