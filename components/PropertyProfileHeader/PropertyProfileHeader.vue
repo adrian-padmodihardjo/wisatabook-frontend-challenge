@@ -76,11 +76,16 @@ export default {
       return this.catalog?.review_rating
     },
   },
-  watch: {
-    propertyId: {
-      immediate: true,
-      handler: 'fetchPropertyDetails',
-    },
+  mounted () {
+    this.$watch(
+      'propertyId',
+      function (newVal, oldVal) {
+        if (newVal !== oldVal) {
+          this.fetchPropertyDetails()
+        }
+      },
+      { immediate: true },
+    )
   },
   methods: {
     async fetchPropertyDetails () {

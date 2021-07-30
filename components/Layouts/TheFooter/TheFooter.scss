@@ -1,0 +1,56 @@
+@use "@/assets/stylesheet/theme" as T;
+
+.the-footer {
+  padding: 6px 0;
+  background-color: #f5f5f5;
+  transition: background-color
+    T.$background-transition-duration
+    T.$background-transition-timing;
+  
+  font-family: Roboto;
+  
+  &__wrapper {
+    display: block;
+    
+    font-size: 15px;
+    vertical-align: middle;
+
+    * {
+      display: inline;
+      word-break: keep-all;
+      white-space: nowrap;
+      padding: 6px 0;
+    }
+
+    *:not(:last-child) {
+      float: left;
+    }
+
+    *:last-child {
+      float: right;
+    }
+
+    &::after {
+      clear: both;
+      content: '';
+      display: block;
+    }
+  }
+
+  strong {
+    font-size: 1rem;
+    font-family: 'Google Sans';
+    font-weight: normal;
+
+    &::before {
+      content: '©';
+      display: inline;
+      padding-right: 0.25em;;
+      font-family: Roboto;
+    }
+  }
+
+  &--dark {
+    background-color: #272727;
+  }
+}

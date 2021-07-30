@@ -1,26 +1,28 @@
 <template>
   <div class="images-grid">
     <figure
-      v-for="(img, i) in images"
-      :key="i"
-      :class="{
-        'images-grid__item': true,
-        'images-grid__item--loading': isLoadingImage(i)
-      }"
+      v-for="img in images"
+      :key="img.id"
+      class="images-grid__item"
       :style="gridItemStyles"
     >
-      <img
-        :src="img.src"
+      <LazyImage
+        class="images-grid__item__img"
         :alt="img.caption"
-        @load="onImageLoaded(i)"
-      >
+        :srcset="img.srcset"
+        blur
+      />
       <i class="images-grid__item__spinner" />
     </figure>
   </div>
 </template>
 
 <script>
+import { LazyImage } from '@/components/LazyImage'
 export default {
+  components: {
+    LazyImage,
+  },
   props: {
     images: {
       type: Array,
@@ -31,11 +33,6 @@ export default {
       default: 3,
     },
   },
-  data () {
-    return {
-      loadedImages: [],
-    }
-  },
   computed: {
     gridItemStyles () {
       const col = typeof (+this.column) === 'number'
@@ -44,14 +41,6 @@ export default {
       return {
         flexBasis: `${100 / Math.max(col, 1)}%`,
       }
-    },
-  },
-  methods: {
-    isLoadingImage (imageIndex) {
-      return !this.loadedImages.includes(imageIndex)
-    },
-    onImageLoaded (imageIndex) {
-      this.loadedImages.push(imageIndex)
     },
   },
 }

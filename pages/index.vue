@@ -17,11 +17,13 @@
         :caption="caption"
       />
     </ResponsiveContainer>
+    <TheFooter />
   </div>
 </template>
 
 <script>
 import { TheHeader } from '@/components/Layouts/TheHeader'
+import { TheFooter } from '@/components/Layouts/TheFooter'
 import { ResponsiveContainer } from '@/components/Layouts/ResponsiveContainer'
 import { PropertyProfileHeader } from '@/components/PropertyProfileHeader'
 import { PropertyGalleryCategories } from '@/components/PropertyGalleryCategories'
@@ -30,6 +32,7 @@ import { PropertyGalleryTags } from '@/components/PropertyGalleryTags'
 export default {
   components: {
     TheHeader,
+    TheFooter,
     ResponsiveContainer,
     PropertyProfileHeader,
     PropertyGalleryCategories,
