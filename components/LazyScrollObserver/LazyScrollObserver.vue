@@ -30,7 +30,7 @@ export default {
     intersectionObserverCallback (entries, observer) {
       const entry = entries[0]
       if (entry.isIntersecting) {
-        this.$emit('reach:bottom', entry, observer)
+        this.$emit('intersect', entry, observer)
       }
     },
     initObserver () {
@@ -44,8 +44,16 @@ export default {
             ...this.options,
           },
         )
-        this.addScrollListener()
         this.observeTarget()
+      }
+    },
+    reobserve () {
+      this.unobserveTarget()
+      this.observeTarget()
+    },
+    unobserveTarget () {
+      if (this.isInit) {
+        this.intersectionObserver.unobserve(this.$el)
       }
     },
     observeTarget () {
@@ -55,24 +63,8 @@ export default {
     },
     destroyObserver () {
       if (this.isInit) {
-        this.removeScrollListener()
         this.intersectionObserver.disconnect()
         this.intersectionObserver = null
-      }
-    },
-    onScroll () {
-      this.observeTarget()
-    },
-    addScrollListener () {
-      if (this.isInit) {
-        const scroller = this.intersectionObserver.root || window
-        scroller.addEventListener?.('scroll', this.onScroll)
-      }
-    },
-    removeScrollListener () {
-      if (this.isInit) {
-        const scroller = this.intersectionObserver.root || window
-        scroller.removeEventListener?.('scroll', this.onScroll)
       }
     },
   },

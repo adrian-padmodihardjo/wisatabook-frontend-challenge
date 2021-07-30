@@ -7,10 +7,11 @@
     />
     <hr class="property-gallery__divider">
     <LazyScrollObserver
+      ref="lazyScrollObserver"
       :options="{
         rootMargin: '0px 0px 56px 0px'
       }"
-      @reach:bottom="onReachBottom"
+      @intersect="onObserverIntersect"
     />
   </div>
 </template>
@@ -61,18 +62,16 @@ export default {
     getImageIdentifier (imgData) {
       return imgData?.size_lg
     },
-    async onReachBottom (entry, observer) {
+    async onObserverIntersect () {
       await this.appendImages(this.currentPage + 1)
     },
     async refreshImages () {
       const newImages = await this.fetchImages(1)
       this.images = newImages
-      this.currentPage = 1
     },
     async appendImages (page) {
       const newImages = await this.fetchImages(page)
       this.images.push(...newImages)
-      this.currentPage = page
     },
     async fetchImages (page) {
       const limit = this.cols * this.rows
@@ -82,6 +81,10 @@ export default {
         limit,
       })
       if (Array.isArray(data) && data.length) {
+        // if observer target still visible within viewport,
+        // it means some more images need to be fetched
+        this.$refs.lazyScrollObserver.reobserve()
+        this.currentPage = page
         return data.map(img => ({
           // shouldn't refer to size_xs
           id: img.size_xs,
@@ -95,8 +98,16 @@ export default {
       const { size_xs, size_sm, size_lg } = imgObject
       return [
         { src: size_xs, minWidth: 0 },
-        { src: size_sm, minWidth: 0 },
-        { src: size_lg, minWidth: parseInt(this.$theme.breakpoints.md) },
+        {
+          src: size_sm,
+          minWidth: 0,
+          onVisibleOnly: true,
+        },
+        {
+          src: size_lg,
+          minWidth: parseInt(this.$theme.breakpoints.md),
+          onVisibleOnly: true,
+        },
       ]
     },
   },
