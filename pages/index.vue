@@ -1,22 +1,26 @@
 <template>
   <div>
     <TheHeader />
-    <ResponsiveContainer>
+    <ResponsiveContainer
+      :style="containerGutterStyles"
+    >
       <PropertyProfileHeader
         :property-id="propertyId"
         style="margin: 24px 0; padding: 24px 0; margin-bottom: 40px;"
         @load="onProfileLoaded"
       />
-      <PropertyGalleryCategories />
-      <PropertyGalleryTags
-        :property-id="propertyId"
-        style="margin: 0 -12px; padding: 16px 0;"
-        @change="caption = $event"
-      />
-      <PropertyGallery
-        :property-id="propertyId"
-        :caption="caption"
-      />
+      <div :style="wrapperStyles">
+        <PropertyGalleryCategories />
+        <PropertyGalleryTags
+          :property-id="propertyId"
+          style="margin: 0 -12px; padding: 16px 0;"
+          @change="caption = $event"
+        />
+        <PropertyGallery
+          :property-id="propertyId"
+          :caption="caption"
+        />
+      </div>
     </ResponsiveContainer>
     <TheFooter :style="footerStyles" />
   </div>
@@ -58,6 +62,16 @@ export default {
     }
   },
   computed: {
+    wrapperStyles () {
+      if (this.$theme.breakpoint.sm) {
+        return {
+          margin: 0,
+        }
+      }
+      return {
+        margin: '0 -12px',
+      }
+    },
     footerStyles () {
       if (this.booted) {
         return null
