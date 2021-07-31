@@ -1,9 +1,7 @@
 <template>
   <div>
     <TheHeader />
-    <ResponsiveContainer
-      :style="containerGutterStyles"
-    >
+    <ResponsiveContainer>
       <PropertyProfileHeader
         :property-id="propertyId"
         style="margin: 24px 0; padding: 24px 0; margin-bottom: 40px;"
